@@ -1,0 +1,48 @@
+direction: right
+
+title: |md
+  # Hermes SkillForge — Conversion Pipeline
+| {near: top-center}
+
+sources: "Any Source" {
+  shape: package
+  style.fill: "#e8f0fe"
+  agent: "agentskills.io / Claude\nCodex / Cursor skills"
+  repo: "GitHub repos &\nagent workflows"
+  mcp: "MCP server\nmanifests"
+  plugin: "Plugin repos,\nprompt packs,\nrules files"
+}
+
+engine: "skillforge.py" {
+  shape: hexagon
+  style.fill: "#fce8e6"
+  analyze: "analyze\nformat detection\n(confidence scoring)"
+  convert: "convert\nSKILL.md generation"
+  validate: "validate\nofficial rules"
+  repair: "repair\nauto-fix loop"
+  test: "test\nper-skill pytest"
+  install: "install\n~/.hermes/skills/"
+}
+
+output: "Install-Ready Hermes Skill" {
+  shape: cylinder
+  style.fill: "#e6f4ea"
+  skillmd: "SKILL.md"
+  refs: "references/"
+  tests2: "tests/"
+  scripts: "scripts/"
+}
+
+sources.agent -> engine.analyze
+sources.repo -> engine.analyze
+sources.mcp -> engine.analyze
+sources.plugin -> engine.analyze
+engine.analyze -> engine.convert -> engine.validate
+engine.validate -> engine.repair: "failures"
+engine.repair -> engine.validate
+engine.validate -> engine.test: "VALID"
+engine.test -> engine.install: "100% pass"
+engine.convert -> output.skillmd
+engine.convert -> output.refs
+engine.convert -> output.tests2
+engine.convert -> output.scripts

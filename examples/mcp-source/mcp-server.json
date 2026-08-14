@@ -1,0 +1,14 @@
+{
+  "name": "weather-lookup",
+  "version": "0.3.1",
+  "description": "MCP server exposing weather lookup and forecast tools",
+  "endpoint": "http://localhost:8899/mcp",
+  "tools": [
+    {"name": "weather_current", "description": "Get current weather for a city"},
+    {"name": "weather_forecast", "description": "Get 5-day forecast for a city"}
+  ],
+  "config": {
+    "api_key_secret": "WEATHER_API_KEY",
+    "rate_limit": "120/minute"
+  }
+}

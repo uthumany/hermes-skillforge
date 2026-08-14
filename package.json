@@ -1,0 +1,47 @@
+{
+  "name": "@uthumany/hermes-skillforge",
+  "version": "1.0.0",
+  "description": "Convert any skill, repo, or tool into an install-ready Hermes Agent skill. Supports Agent Skills, Claude, Codex, Cursor, MCP, plugins, prompt packs, and 20+ other formats.",
+  "keywords": [
+    "hermes-agent", "hermes-skill", "agentskills.io", "claude-skills",
+    "codex", "cursor-rules", "mcp-server", "mcp", "ai-agent",
+    "agent-skill", "skill-converter", "automation", "claude",
+    "llm-tools", "prompt-engineering", "devtools"
+  ],
+  "license": "MIT",
+  "author": "uthumany",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uthumany/hermes-skillforge.git"
+  },
+  "homepage": "https://github.com/uthumany/hermes-skillforge",
+  "bugs": {
+    "url": "https://github.com/uthumany/hermes-skillforge/issues"
+  },
+  "bin": {
+    "skillforge": "bin/skillforge"
+  },
+  "scripts": {
+    "start": "python3 scripts/skillforge.py",
+    "convert": "python3 scripts/skillforge.py convert",
+    "validate": "python3 scripts/skillforge.py validate",
+    "test": "python3 -m pytest tests/ -q",
+    "test:engine": "python3 -m pytest tests/test_skillforge_engine.py -q",
+    "lint": "python3 -m py_compile scripts/skillforge.py"
+  },
+  "engines": {
+    "node": ">=16",
+    "python": ">=3.10"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "skill/",
+    "references/",
+    "tests/",
+    "SKILL.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {}
+}

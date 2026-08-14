@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.133.0",
+  "pnpmVersion": "8.15.9",
+  "nodeSupportedVersionRange": ">=16.0.0",
+  "projects": [
+    {
+      "packageName": "@uthumany/hermes-skillforge",
+      "projectFolder": ".",
+      "shouldPublish": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+.hermes/
+*.egg-info/
+dist/
+.env
+.npmrc

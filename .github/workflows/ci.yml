@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Engine tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python3 -m py_compile scripts/skillforge.py
+      - run: python3 -m pytest tests/ -q
+      - run: HERMES_HOME=$(mktemp -d) python3 scripts/skillforge.py convert examples/agentskills-source
+      - run: HERMES_HOME=$(mktemp -d) python3 scripts/skillforge.py validate
+
+  demo-conversions:
+    name: Demo conversions (agentskills / repo workflow / MCP)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          for src in examples/agentskills-source examples/workflow-repo-source examples/mcp-source; do
+            export HERMES_HOME=$(mktemp -d)
+            python3 scripts/skillforge.py convert "$src"
+            python3 scripts/skillforge.py validate
+            python3 scripts/skillforge.py test
+          done
