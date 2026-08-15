@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import re
 from pathlib import Path
 
 import pytest
@@ -163,3 +164,80 @@ class TestSecurityQuarantine(unittest.TestCase):
 
 if __name__ == "__main__":
     pytest.main([str(__file__), "-q"])
+
+
+class TestBanner(unittest.TestCase):
+    """Responsive banner: tier selection, color fallbacks, CLI flags."""
+
+    def setUp(self):
+        self.script = str(SKILL_DIR / "scripts" / "banner.py")
+        self.env = {k: v for k, v in os.environ.items()
+                    if k not in ("TERM", "COLORTERM", "TERM_PROGRAM", "NO_COLOR")}
+        self.env["TERM"] = "xterm-256color"
+        self.env["COLORTERM"] = "truecolor"
+
+    def _meta(self, width, color_env=None):
+        env = dict(self.env)
+        if color_env:
+            env.update(color_env)
+        out = subprocess.run([sys.executable, self.script, "--json", "--width", str(width)],
+                             capture_output=True, text=True, env=env)
+        self.assertEqual(out.returncode, 0, msg=(out.stdout + out.stderr))
+        return json.loads(out.stdout)
+
+    def test_full_block_tier(self):
+        meta = self._meta(100)
+        self.assertEqual(meta["tier"], "block")
+        self.assertEqual(meta["line_count"], 15)
+
+    def test_compact_block_tier(self):
+        meta = self._meta(70)
+        self.assertEqual(meta["tier"], "block4")
+
+    def test_thin_tier(self):
+        meta = self._meta(45)
+        self.assertEqual(meta["tier"], "thin")
+
+    def test_minimal_tier(self):
+        meta = self._meta(30)
+        self.assertEqual(meta["tier"], "minimal")
+        self.assertEqual(meta["line_count"], 1)
+
+    def test_truecolor_mode(self):
+        meta = self._meta(80)
+        self.assertEqual(meta["color_mode"], "truecolor")
+
+    def test_256color_fallback(self):
+        meta = self._meta(80, color_env={"COLORTERM": "", "TERM": "vt100"})
+        self.assertEqual(meta["color_mode"], "ansi256")
+
+    def test_mono_no_color(self):
+        meta = self._meta(80, color_env={"NO_COLOR": "1"})
+        self.assertEqual(meta["color_mode"], "mono")
+
+    def test_rendered_width_within_limit(self):
+        meta = self._meta(120)
+        self.assertLessEqual(meta["rendered_width"], meta["width"])
+
+    def test_cli_via_skillforge(self):
+        engine = str(SKILL_DIR / "scripts" / "skillforge.py")
+        out = subprocess.run([sys.executable, engine, "banner", "--json", "--width", "90"],
+                             capture_output=True, text=True, env=self.env,
+                             cwd=str(SKILL_DIR / "scripts"))
+        self.assertEqual(out.returncode, 0, msg=out.stderr)
+        meta = json.loads(out.stdout)
+        self.assertIn(meta["tier"], ("block", "block4"))
+
+    def test_gradient_uses_green_and_blue(self):
+        out = subprocess.run([sys.executable, self.script, "--width", "100"],
+                             capture_output=True, text=True, env=self.env)
+        text = out.stdout
+        colors = [tuple(int(x) for x in c.split(";"))
+                  for c in re.findall(r"38;2;(\d{1,3};\d{1,3};\d{1,3})m", text)]
+        self.assertGreater(len(colors), 2)
+        r0, g0, b0 = colors[0]
+        self.assertGreater(g0, r0 + 100)  # greenish start
+        rb, gb, bb = colors[-1]
+        self.assertGreater(bb, rb + 150)  # blueish end
+        self.assertLess(abs(rb - 56), 6)
+        self.assertLess(abs(bb - 248), 10)
