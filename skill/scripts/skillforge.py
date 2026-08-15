@@ -1081,7 +1081,12 @@ def _parse_fm(text):
                 stack.pop()
             parent = stack[-1][0]
             if current_key:
-                entry = parent.setdefault(current_key, [])
+                existing = parent.get(current_key)
+                if isinstance(existing, list):
+                    entry = existing
+                else:
+                    entry = []
+                    parent[current_key] = entry
                 entry.append(line[2:].strip())
             continue
         if ":" in line:
@@ -1463,7 +1468,9 @@ def validate_skill(skill_dir: Path):
             if not VALID_NAME_RE.match(str(name)):
                 errors.append("name must be lowercase a-z/0-9 with hyphens only.")
             if name != skill_dir.name:
-                errors.append(f"name '{name}' must equal directory name '{skill_dir.name}'.")
+                warnings.append(
+                    f"name '{name}' differs from the directory name "
+                    f"'{skill_dir.name}' — names should match at install time")
             if name in ("skill", "skill-forge", "skillforge"):
                 warnings.append("Consider a more distinctive name to avoid collisions.")
 

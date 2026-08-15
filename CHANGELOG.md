@@ -1,3 +1,12 @@
+
+## [1.0.1] - 2026-08-15
+
+- CI: fixed engine/test paths for repo layout and installed pytest in runners
+- Validator: name-vs-directory mismatch now a warning (supports skills in wrapper directories)
+- Generated tests: robust frontmatter YAML parser (handles mixed scalar/list keys)
+- Validator self-test passes on repo layout
+
+## [1.0.0] - 2026-08-15
 # Changelog
 
 All notable changes to Hermes SkillForge will be documented in this file.
