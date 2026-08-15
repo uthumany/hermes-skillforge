@@ -21,8 +21,10 @@ jobs:
       - run: python3 -m pip install --upgrade pip && pip install pytest
       - run: python3 -m py_compile skill/scripts/skillforge.py
       - run: python3 -m pytest skill/tests/ -q
-      - run: HERMES_HOME=$(mktemp -d) python3 skill/scripts/skillforge.py convert examples/agentskills-source
-      - run: HERMES_HOME=$(mktemp -d) python3 skill/scripts/skillforge.py validate
+      - run: |
+          export HERMES_HOME=$(mktemp -d)
+          python3 skill/scripts/skillforge.py convert examples/agentskills-source
+          python3 skill/scripts/skillforge.py validate
 
   demo-conversions:
     name: Demo conversions (agentskills / repo workflow / MCP)
