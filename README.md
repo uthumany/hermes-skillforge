@@ -3,8 +3,8 @@
 <div align="center">
 
 [![CI](https://github.com/uthumany/hermes-skillforge/actions/workflows/ci.yml/badge.svg)](https://github.com/uthumany/hermes-skillforge/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/@uthumany/hermes-skillforge?logo=npm&color=cb3837)](https://www.npmjs.com/package/@uthumany/hermes-skillforge)
-[![npm downloads](https://img.shields.io/npm/dt/@uthumany/hermes-skillforge?logo=npm&label=downloads)](https://www.npmjs.com/package/@uthumany/hermes-skillforge)
+[![npm version](https://img.shields.io/npm/v/hermes-skillforge?logo=npm&color=cb3837)](https://www.npmjs.com/package/hermes-skillforge)
+[![npm downloads](https://img.shields.io/npm/dt/hermes-skillforge?logo=npm&label=downloads)](https://www.npmjs.com/package/hermes-skillforge)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?logo=opensourceinitiative)](./LICENSE)
 [![Hermes Agent Skill](https://img.shields.io/badge/Hermes-Skill-purple?logo=github)](https://github.com/NousResearch/hermes-agent)
@@ -87,33 +87,33 @@ The pipeline flows **analyze → convert → validate → repair → test → in
 
 ## Installation
 
-SkillForge is distributed on npm under `@uthumany/hermes-skillforge` and can be installed with **any major JavaScript/Node toolchain**. Python ≥ 3.10 is the only runtime requirement (the engine itself is stdlib-only).
+SkillForge is distributed on npm under `hermes-skillforge` and can be installed with **any major JavaScript/Node toolchain**. Python ≥ 3.10 is the only runtime requirement (the engine itself is stdlib-only).
 
 ### npm
 
 ```bash
-npm install -g @uthumany/hermes-skillforge
+npm install -g hermes-skillforge
 skillforge --help
 ```
 
 ### Yarn
 
 ```bash
-yarn global add @uthumany/hermes-skillforge
+yarn global add hermes-skillforge
 skillforge --help
 ```
 
 ### pnpm
 
 ```bash
-pnpm add -g @uthumany/hermes-skillforge
+pnpm add -g hermes-skillforge
 skillforge --help
 ```
 
 ### Bun
 
 ```bash
-bun add -g @uthumany/hermes-skillforge
+bun add -g hermes-skillforge
 skillforge --help
 # or run directly from this repo:
 bun run main.bun.js convert <source>
@@ -131,30 +131,30 @@ deno run --allow-read --allow-write --allow-env Deno.ts convert <source>
 ### npx (no install at all)
 
 ```bash
-npx -y @uthumany/hermes-skillforge convert <source>
+npx -y hermes-skillforge convert <source>
 ```
 
 ### Rush
 
 ```bash
 # Add to your monorepo rush.json projects:
-#   { "packageName": "@uthumany/hermes-skillforge", "projectFolder": ".", "shouldPublish": true }
-rush add -p @uthumany/hermes-skillforge
+#   { "packageName": "hermes-skillforge", "projectFolder": ".", "shouldPublish": true }
+rush add -p hermes-skillforge
 ```
 
 ### Lerna
 
 ```bash
 # Inside a Lerna monorepo, add to package.json dependencies:
-npm install @uthumany/hermes-skillforge
-npx lerna run test --scope @uthumany/hermes-skillforge
+npm install hermes-skillforge
+npx lerna run test --scope hermes-skillforge
 ```
 
 ### Volta (version-pinned)
 
 ```bash
 volta install node
-volta install @uthumany/hermes-skillforge
+volta install hermes-skillforge
 skillforge --help
 ```
 

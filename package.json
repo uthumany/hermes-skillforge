@@ -1,5 +1,5 @@
 {
-  "name": "@uthumany/hermes-skillforge",
+  "name": "hermes-skillforge",
   "version": "1.0.0",
   "description": "Convert any skill, repo, or tool into an install-ready Hermes Agent skill. Supports Agent Skills, Claude, Codex, Cursor, MCP, plugins, prompt packs, and 20+ other formats.",
   "keywords": [
