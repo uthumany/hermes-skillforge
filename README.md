@@ -285,3 +285,7 @@ This project is licensed under the **MIT License** — see [LICENSE](./LICENSE) 
 ## Acknowledgements
 
 Built on the [Hermes Agent](https://github.com/NousResearch/hermes-agent) skill architecture and the [agentskills.io](https://agentskills.io) open standard.
+
+## Show your support
+
+If Hermes SkillForge is useful to you, starring the repository helps others find it and directly supports continued development. Bug reports, feature requests, and pull requests are all welcome — this project follows a community-driven roadmap in `CONTRIBUTING.md`.
